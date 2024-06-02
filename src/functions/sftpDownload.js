@@ -8,7 +8,7 @@ async function deleteLocalFile() {
     fs.unlinkSync(filePath);
     console.log("File deleted successfully");
   } catch (err) {
-    console.error(`Error deleting file`);
+    console.error(`Error deleting file: ${err}`);
   }
 
   return;
@@ -39,29 +39,29 @@ async function sftpDownload() {
   });
 }
 
-async function waitForFile(filePath, timeout = 30000, interval = 1000) {
-  const startTime = Date.now();
-
-  while (true) {
-    try {
-      await fs.existsSync("../soh/BikeWise_10KM_PartsOnHandQty.csv");
-      return;
-    } catch (error) {
-      if (Date.now() - startTime > timeout) {
-        throw new Error(`Timeout waiting for file: ${filePath}`);
-      }
-      await new Promise((resolve) => setTimeout(resolve, interval));
-    }
-  }
-}
+// async function waitForFile(filePath, timeout = 30000, interval = 1000) {
+//   const startTime = Date.now();
+//
+//   while (true) {
+//     try {
+//       await fs.existsSync("../soh/BikeWise_10KM_PartsOnHandQty.csv");
+//       return;
+//     } catch (error) {
+//       if (Date.now() - startTime > timeout) {
+//         throw new Error(`Timeout waiting for file: ${filePath}`);
+//       }
+//       await new Promise((resolve) => setTimeout(resolve, interval));
+//     }
+//   }
+// }
 
 export async function ftp() {
   sftpDownload();
-  await waitForFile()
-    .then(() => {
-      return;
-    })
-    .catch((error) => {
-      console.error(error.message);
-    });
+  // await waitForFile()
+  //   .then(() => {
+  //     return;
+  //   })
+  //   .catch((error) => {
+  //     console.error(error.message);
+  //   });
 }
